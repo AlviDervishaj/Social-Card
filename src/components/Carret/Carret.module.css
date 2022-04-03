@@ -1,0 +1,7 @@
+.carret {
+  justify-self: flex-end;
+  align-self: center;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 0.25rem;
+}

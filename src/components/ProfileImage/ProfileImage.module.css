@@ -1,0 +1,9 @@
+.profileImage{
+  box-sizing: border-box;
+  border-radius: 99999px;
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  align-self: flex-start;
+  justify-self: center; 
+}

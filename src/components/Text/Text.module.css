@@ -1,0 +1,11 @@
+.cardText {
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  width: auto;
+  max-height: fit-content;
+  cursor: text;
+  resize: none;
+  box-shadow: none;
+  overflow: hidden;
+}

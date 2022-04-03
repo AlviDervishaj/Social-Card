@@ -1,0 +1,29 @@
+.header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  gap: 0.3rem;
+  justify-self: flex-start;
+  align-self: flex-start;
+}
+
+.username, .userTag{
+  font-size: inherit;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+.username {
+  word-spacing: 0.05rem;
+  letter-spacing: 0.06rem;
+}
+
+.userTag, .createdDate {
+  color: #6c757d;
+  letter-spacing: 0.04rem;
+}
+
+

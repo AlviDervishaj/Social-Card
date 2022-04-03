@@ -1,0 +1,95 @@
+.imageContainer {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  padding: 0.4rem 0;
+  position: relative;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+}
+
+.newImageForm {
+  width: 100%;
+  height: 100%;
+  background-color: #ced4da;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.newImageFormInfo{
+  font-size: 1.1rem;
+  color: #2e2e2e;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.enterImageChoices{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
+}
+
+.imageInputHidden{
+  display: none;
+}
+
+.imageButton{
+  width: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: inherit;
+  text-align: center;
+  color: #f8f9fa;
+  background-color: #669bbc;
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
+}
+
+.newImageURL {
+  width: auto;
+  height: auto;
+  text-align: center;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #003049;
+  color: #1d3557;
+  background-color: transparent;
+  outline: none;
+}
+
+.discardChanges {
+  width: auto;
+  height: auto;
+  text-align: center;
+  color: #edf6f9;
+  background-color: #d62828;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+@media only screen and (max-width:1024px){
+  .enterImageChoices{
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+
+
+
