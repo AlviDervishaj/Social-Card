@@ -3,12 +3,16 @@ import styles from "./Card.module.css";
 
 // Components
 import { Body } from "../Body";
-import { ProfileImage } from "../ProfileImage/ProfileImage";
+import {Header} from "../Header";
 
 export const Card = () => {
   return (
     <section className={styles.card}>
-      <ProfileImage />
+      <Header
+        username={"Alvi Dervishaj"}
+        tag={"@alviiii"}
+        createdDate={"Mar 2"}
+      />
       <Body />
     </section>
   );

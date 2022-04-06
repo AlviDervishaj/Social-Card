@@ -1,14 +1,14 @@
 .imageContainer {
   width: 100%;
   height: auto;
-  object-fit: contain;
   padding: 0.4rem 0;
   position: relative;
 }
 
 .cardImage {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
 }
 
 .newImageForm {
@@ -71,25 +71,51 @@
   outline: none;
 }
 
-.discardChanges {
+.error{
+  font-size: inherit;
+  color: #d62828;
+  width: 80%;
+  text-align: center;
+}
+.buttons{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
+}
+
+.discardChanges, .saveChanges {
   width: auto;
   height: auto;
   text-align: center;
   color: #edf6f9;
-  background-color: #d62828;
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 1rem;
   cursor: pointer;
 }
+.saveChanges{ 
+  background-color: #17c3b2;
+}
+
+.discardChanges{
+
+  background-color: #d62828;
+}
 
 @media only screen and (max-width:1024px){
+  .cardImage {
+    max-width: 20rem;
+  }
   .enterImageChoices{
     flex-direction: column;
     gap: 1rem;
   }
+  .discardChanges, .saveChanges, .error, .newImageURL ,.imageButton, .newImageFormInfo{
+    font-size: 0.8rem;
+  }
 }
-
-
-
 

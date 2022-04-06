@@ -9,3 +9,10 @@
   box-shadow: none;
   overflow: hidden;
 }
+
+@media only screen and (max-width: 1024px){
+  .cardText{
+    font-size: 0.8rem;
+  }
+}
+
