@@ -7,9 +7,15 @@ import styles from "./Image.module.css";
 // Axios
 import axios from "axios";
 
+// Font awesome component
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// font awesome icons
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 export const Image = ({ image }) => {
   // control image URL input
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState(image);
   // control errors
   const [error, setError] = useState("");
   // control image change UI
@@ -22,6 +28,7 @@ export const Image = ({ image }) => {
   const [imageDescription, setImageDescription] = useState(
     "Image Description here !"
   );
+  const [isLoading, setIsLoading] = useState(false);
   // image title
   const [imageTitle, setImageTitle] = useState("Image Title Here !");
   // check if text is a valid URL
@@ -34,12 +41,9 @@ export const Image = ({ image }) => {
 
   // discard changes
   const discardChanges = () => {
-    // set image URL to empty string
-    setImageURL("");
+    setIsLoading(false);
     // display only the image and get rid of the change image UI
     setIsClicked(false);
-    // set Image Displayed to default image
-    setImageDisplayed(image);
     // set done to false
     setIsDone(false);
   };
@@ -53,24 +57,29 @@ export const Image = ({ image }) => {
 
   // save changes
   const saveChanges = async () => {
+    setIsLoading(true);
     // image URL is valid URL
-    const response = await axios.post("https://floating-taiga-71718.herokuapp.com/getSite", { imageURL });
+    const response = await axios.post(
+      process.env.NODE_ENV === "production"
+        ? process.env.REACT_APP_PRODUCTION_URL
+        : process.env.REACT_APP_DEVELOPMENT_URL,
+      { imageURL }
+    );
     // set image as response.data.image
     // and description as response.data.description
     setImageDisplayed(response.data.image);
     setImageDescription(response.data.description);
     setImageTitle(response.data.title);
     setImageURL(response.data.url);
+    setIsLoading(false);
     setIsClicked(false);
     setIsDone(false);
   };
 
   // wake up the server with an initial empty request
   useEffect(() => {
-    axios.get("https://floating-taiga-71718.herokuapp.com/").then((response) => {
-      console.log(response.data.info)
-    });
-  }, [])
+    axios.get("https://floating-taiga-71718.herokuapp.com/");
+  }, []);
 
   return (
     <div className={styles.imageContainer}>
@@ -85,40 +94,47 @@ export const Image = ({ image }) => {
       />
       {isClicked && (
         <div className={styles.newImageForm}>
-          {/* Information */}
-          <p className={styles.newImageFormInfo}>
-            Upload image from device or enter image URL
-          </p>
-          <div className={styles.enterImageChoices}>
-            {/* Enter image url */}
-            <input
-              type="text"
-              value={imageURL}
-              placeholder={image}
-              className={styles.newImageURL}
-              onChange={(event) => setImageURL(event.target.value)}
+          {!isLoading ? (
+            <>
+              {/* Information */}
+              <p className={styles.newImageFormInfo}>Enter image URL</p>
+              <div className={styles.enterImageChoices}>
+                {/* Enter image url */}
+                <input
+                  type="text"
+                  value={imageURL}
+                  placeholder={image}
+                  className={styles.newImageURL}
+                  onChange={(event) => setImageURL(event.target.value)}
+                />
+              </div>
+              {error && <p className={styles.error}>{error}</p>}
+              {/* Buttons */}
+              <section className={styles.buttons}>
+                {/* Save Changes */}
+                {isDone && (
+                  <button
+                    className={styles.saveChanges}
+                    onClick={() => saveChanges()}
+                  >
+                    Save
+                  </button>
+                )}
+                {/* cancel / discard changes */}
+                <button
+                  className={styles.discardChanges}
+                  onClick={() => discardChanges()}
+                >
+                  Discard
+                </button>
+              </section>
+            </>
+          ) : (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              className={`fa-spin-pulse ${styles.loadingIcon}`}
             />
-          </div>
-          {error && <p className={styles.error}>{error}</p>}
-          {/* Buttons */}
-          <section className={styles.buttons}>
-            {/* Save Changes */}
-            {isDone && (
-              <button
-                className={styles.saveChanges}
-                onClick={() => saveChanges()}
-              >
-                Save
-              </button>
-            )}
-            {/* cancel / discard changes */}
-            <button
-              className={styles.discardChanges}
-              onClick={() => discardChanges()}
-            >
-              Discard
-            </button>
-          </section>
+          )}
         </div>
       )}
       {/* Image Title */}
@@ -126,7 +142,16 @@ export const Image = ({ image }) => {
       {/* Image description */}
       <p className={styles.imageDescription}>{imageDescription}</p>
       {/* Image URL */}
-      <a href={imageURL}>{isValidURL(imageURL) ? (new URL(imageURL)).hostname.replace('www', '') : "Source"}</a>
+      <a
+        href={imageURL}
+        rel="noreferrer"
+        target={"_blank"}
+        className={styles.imageSource}
+      >
+        {isValidURL(imageURL)
+          ? new URL(imageURL).hostname.replace("www", "")
+          : "Source"}
+      </a>
     </div>
   );
 };

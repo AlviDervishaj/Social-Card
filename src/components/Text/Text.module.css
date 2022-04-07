@@ -3,16 +3,9 @@
   border: 1px solid transparent;
   outline: none;
   width: auto;
-  max-height: fit-content;
+  min-height: 5rem;
   cursor: text;
   resize: none;
   box-shadow: none;
   overflow: hidden;
 }
-
-@media only screen and (max-width: 1024px){
-  .cardText{
-    font-size: 0.8rem;
-  }
-}
-
