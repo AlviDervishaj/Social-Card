@@ -54,11 +54,7 @@ export const Image = ({ image }) => {
   // save changes
   const saveChanges = async () => {
     // image URL is valid URL
-    const response = await axios.post(
-      "https://social-card-api.herokuapp.com/",
-      { imageURL }
-    );
-    console.log({ image: response.data.image });
+    const response = await axios.post("https://floating-taiga-71718.herokuapp.com/getSite", { imageURL });
     // set image as response.data.image
     // and description as response.data.description
     setImageDisplayed(response.data.image);
@@ -68,6 +64,13 @@ export const Image = ({ image }) => {
     setIsClicked(false);
     setIsDone(false);
   };
+
+  // wake up the server with an initial empty request
+  useEffect(() => {
+    axios.get("https://floating-taiga-71718.herokuapp.com/").then((response) => {
+      console.log(response.data.info)
+    });
+  }, [])
 
   return (
     <div className={styles.imageContainer}>
@@ -123,7 +126,7 @@ export const Image = ({ image }) => {
       {/* Image description */}
       <p className={styles.imageDescription}>{imageDescription}</p>
       {/* Image URL */}
-      <a href={imageURL}>Source</a>
+      <a href={imageURL}>{isValidURL(imageURL) ? (new URL(imageURL)).hostname.replace('www', '') : "Source"}</a>
     </div>
   );
 };
