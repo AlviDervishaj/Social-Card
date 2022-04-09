@@ -10,7 +10,7 @@ export const Body = () => {
   return (
     <section className={styles.cardBody}>
       <Text />
-      <Image image={"https://picsum.photos/200/200"} />
+      <Image />
       <Footer />
     </section>
   );

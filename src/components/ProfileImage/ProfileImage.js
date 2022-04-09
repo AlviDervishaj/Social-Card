@@ -1,9 +1,19 @@
-// User Image
-import Image from "../../assets/windowsImage.jpeg";
+// React
+import { useContext } from "react";
 
 // Styling
 import styles from "./ProfileImage.module.css";
 
+// Context
+import { CardContext } from "../Context";
+
 export const ProfileImage = () => {
-  return <img src={Image} alt="Profile" className={styles.profileImage} />;
+  const { cardProps } = useContext(CardContext);
+  return (
+    <img
+      src={cardProps.userImage}
+      alt="Profile"
+      className={styles.profileImage}
+    />
+  );
 };

@@ -12,10 +12,12 @@
   border-top: 1px solid #adb5bd;
   border-bottom: 1px solid #adb5bd;
   padding: 1rem 0;
+  z-index: 999;
+  margin: auto;
 }
 
-@media only screen and (max-width: 1024px){
-  .card{
+@media only screen and (max-width: 1024px) {
+  .card {
     width: 90%;
   }
 }

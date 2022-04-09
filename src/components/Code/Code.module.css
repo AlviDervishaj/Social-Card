@@ -1,0 +1,35 @@
+pre {
+  width: 100%;
+  max-height: 50rem;
+  overflow-y: auto;
+  overflow-x: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  cursor: pointer;
+}
+code {
+  width: 100%;
+  height: auto;
+}
+.error,
+.message {
+  min-width: 70%;
+  min-height: 2.4rem;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 1rem;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.error {
+  background-color: #e63946;
+  color: #f8f9fa;
+}
+.message {
+  background-color: #00f5d4;
+  color: #000;
+}

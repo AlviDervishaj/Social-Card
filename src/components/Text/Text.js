@@ -1,14 +1,17 @@
 // React
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CardContext } from "../Context";
 
 // Styling
 import styles from "./Text.module.css";
 
 export const Text = () => {
-  const [text, setText] = useState("Hello World !");
+  const { cardProps, setCardProps } = useContext(CardContext);
+  const [text, setText] = useState(cardProps.text);
   const [scrollHeight, setScrollHeight] = useState("");
   const handleOnChange = (event) => {
     setText(event.target.value);
+    setCardProps({ ...cardProps, text: event.target.value });
     // check if event target value is empty string
     if (event.target.value.trim() === "") {
       // if text area is empty set the default height

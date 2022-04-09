@@ -1,5 +1,5 @@
 // React
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // Styling
 import styles from "./Image.module.css";
@@ -12,16 +12,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // font awesome icons
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { CardContext } from "../Context";
 
-export const Image = ({ image }) => {
+export const Image = () => {
+  const { imageProps, setImageProps } = useContext(CardContext);
   // control image URL input
-  const [imageURL, setImageURL] = useState(image);
+  const [imageURL, setImageURL] = useState(imageProps.URL);
   // control errors
   const [error, setError] = useState("");
   // control image change UI
   const [isClicked, setIsClicked] = useState(false);
   // control image on UI
-  const [imageDisplayed, setImageDisplayed] = useState(image);
+  const [imageDisplayed, setImageDisplayed] = useState(imageProps.URL);
   // control the "Done" button
   const [isDone, setIsDone] = useState(false);
   // image description
@@ -47,9 +49,8 @@ export const Image = ({ image }) => {
     // set done to false
     setIsDone(false);
   };
-
+  // check if imageURL is a valid link
   useEffect(() => {
-    // check if imageURL is a valid link
     if (!isValidURL(imageURL)) return setError("Please enter a valid url !");
     setError("");
     setIsDone(true);
@@ -65,12 +66,23 @@ export const Image = ({ image }) => {
         : process.env.REACT_APP_DEVELOPMENT_URL,
       { imageURL }
     );
-    // set image as response.data.image
-    // and description as response.data.description
-    setImageDisplayed(response.data.image);
-    setImageDescription(response.data.description);
-    setImageTitle(response.data.title);
-    setImageURL(response.data.url);
+    // set image properties
+    setImageDisplayed(
+      response.data.image ? response.data.image : imageProps.URL
+    );
+    setImageDescription(
+      response.data.description
+        ? response.data.description
+        : "Image Description Here !"
+    );
+    setImageTitle(
+      response.data.title ? response.data.title : "Image Title Here ! "
+    );
+    setImageURL(response.data.url ? response.data.url : imageProps.URL);
+    setImageProps({
+      URL: response.data.url ? response.data.url : imageProps.URL,
+    });
+    // set booleans
     setIsLoading(false);
     setIsClicked(false);
     setIsDone(false);
@@ -80,7 +92,6 @@ export const Image = ({ image }) => {
   useEffect(() => {
     axios.get("https://floating-taiga-71718.herokuapp.com/");
   }, []);
-
   return (
     <div className={styles.imageContainer}>
       {/* Image */}
@@ -103,7 +114,6 @@ export const Image = ({ image }) => {
                 <input
                   type="text"
                   value={imageURL}
-                  placeholder={image}
                   className={styles.newImageURL}
                   onChange={(event) => setImageURL(event.target.value)}
                 />
@@ -150,7 +160,7 @@ export const Image = ({ image }) => {
       >
         {isValidURL(imageURL)
           ? new URL(imageURL).hostname.replace("www", "")
-          : "Source"}
+          : new URL(imageProps.URL).hostname.replace("www", "")}
       </a>
     </div>
   );
