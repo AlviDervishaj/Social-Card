@@ -9,14 +9,15 @@ export const CardContextProvider = ({ children }) => {
   const [cardProps, setCardProps] = useState({
     username: "Alvi Dervishaj",
     tag: "@alviiii",
-    text: "Hello World !",
+    text: "Click me to edit text ... ",
     userImage: "https://picsum.photos/400",
     createdDate: "Mar 2",
   });
   // image props state
   const [imageProps, setImageProps] = useState({
     URL: "https://picsum.photos/600",
-    title: "Image Title Here !",
+    title: `Click the image above to change source 
+    and it will automatically change the Image title and description below `,
     description: "Image Description Here !",
   });
   return (

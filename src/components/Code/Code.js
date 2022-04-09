@@ -41,11 +41,13 @@ export const Code = () => {
           <section class="body">
             <p>${cardProps.text}</p>
             <div class="imageContainer">
-              <img class="image" alt="Card" src="${imageProps.URL}" />
+              <img class="image" alt="Card"
+              src="${imageProps.URL}" />
               <p class="imageTitle">${imageProps.title}</p>
               <p class="imageDescription">${imageProps.description}</p>
-              <a href="${imageProps.URL}" target="_blank" rel="noreferrer">
-                ${new URL(imageProps.URL).hostname.replace("www", "")}
+              <a href="${imageProps.URL}"
+              target="_blank" rel="noreferrer">
+                ${new URL(imageProps.URL).hostname.replace("www.", "")}
               </a>
             </div>
             <div class="footer">
@@ -189,7 +191,7 @@ export const Code = () => {
   }, []);
   return (
     <>
-      <div onClick={() => copyToClipboard()}>
+      <div className={styles.codeContainer} onClick={() => copyToClipboard()}>
         <ReactMarkdown children={children} />
       </div>
       {message.text && message.type && (

@@ -1,3 +1,4 @@
+
 // React
 import { useContext, useEffect, useState } from "react";
 
@@ -35,9 +36,9 @@ export const Image = () => {
   const [imageTitle, setImageTitle] = useState("Image Title Here !");
   // check if text is a valid URL
   const isValidURL = (text) => {
-    const result = text.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    );
+    // create new regex
+    const reg = new RegExp(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+    const result = text.match(reg);
     return result !== null;
   };
 
@@ -70,21 +71,28 @@ export const Image = () => {
     setImageDisplayed(
       response.data.image ? response.data.image : imageProps.URL
     );
+    // set image description
     setImageDescription(
       response.data.description
         ? response.data.description
-        : "Image Description Here !"
+        : imageProps.description
     );
-    setImageTitle(
-      response.data.title ? response.data.title : "Image Title Here ! "
-    );
+    // set image title
+    setImageTitle(response.data.title ? response.data.title : imageProps.title);
+    // set image URL
     setImageURL(response.data.url ? response.data.url : imageProps.URL);
+    // update image props
     setImageProps({
+      title: imageTitle,
+      description: imageDescription,
       URL: response.data.url ? response.data.url : imageProps.URL,
     });
-    // set booleans
+    // set is loading to false because server returned a response and
+    // UI is updated at this point
     setIsLoading(false);
+    // set is clicked to false so user may see the new image
     setIsClicked(false);
+    // set is done to false so the save changes button will not be displayed  
     setIsDone(false);
   };
 
@@ -159,8 +167,8 @@ export const Image = () => {
         className={styles.imageSource}
       >
         {isValidURL(imageURL)
-          ? new URL(imageURL).hostname.replace("www", "")
-          : new URL(imageProps.URL).hostname.replace("www", "")}
+          ? new URL(imageURL).hostname.replace("www.", "")
+          : new URL(imageProps.URL).hostname.replace("www.", "")}
       </a>
     </div>
   );
