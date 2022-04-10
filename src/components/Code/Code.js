@@ -182,12 +182,22 @@ export const Code = () => {
     }, 2500);
   };
   useEffect(() => {
-    navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
-      if (result.state === "granted" || result.state === "prompt") {
-        // write to clipboard
+    try {
+      if (navigator.permissions) {
+        navigator.permissions
+          .query({ name: "clipboard-write" })
+          .then((result) => {
+            if (result.state === "granted" || result.state === "prompt") {
+              // write to clipboard
+              setCanCopy(true);
+            }
+          });
+      } else {
         setCanCopy(true);
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
   return (
     <>

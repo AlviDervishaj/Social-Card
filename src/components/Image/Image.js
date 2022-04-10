@@ -1,4 +1,3 @@
-
 // React
 import { useContext, useEffect, useState } from "react";
 
@@ -37,7 +36,9 @@ export const Image = () => {
   // check if text is a valid URL
   const isValidURL = (text) => {
     // create new regex
-    const reg = new RegExp(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+    const reg = new RegExp(
+      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    );
     const result = text.match(reg);
     return result !== null;
   };
@@ -92,7 +93,7 @@ export const Image = () => {
     setIsLoading(false);
     // set is clicked to false so user may see the new image
     setIsClicked(false);
-    // set is done to false so the save changes button will not be displayed  
+    // set is done to false so the save changes button will not be displayed
     setIsDone(false);
   };
 
