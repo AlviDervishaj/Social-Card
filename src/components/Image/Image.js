@@ -33,14 +33,17 @@ export const Image = () => {
   const [isLoading, setIsLoading] = useState(false);
   // image title
   const [imageTitle, setImageTitle] = useState("Image Title Here !");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   // check if text is a valid URL
   const isValidURL = (text) => {
-    // create new regex
-    const reg = new RegExp(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    );
-    const result = text.match(reg);
-    return result !== null;
+    let url;
+    try {
+      url = new URL(text);
+    } catch (_) {
+      return false;
+    }
+    console.log(url.protocol === "https:");
+    return url.protocol === "https:";
   };
 
   // discard changes
@@ -48,18 +51,24 @@ export const Image = () => {
     setIsLoading(false);
     // display only the image and get rid of the change image UI
     setIsClicked(false);
+    setIsButtonDisabled(false);
     // set done to false
     setIsDone(false);
   };
   // check if imageURL is a valid link
   useEffect(() => {
-    if (!isValidURL(imageURL)) return setError("Please enter a valid url !");
+    if (!isValidURL(imageURL)) {
+      setIsButtonDisabled(true);
+      return setError("Please enter a valid url !");
+    }
+    setIsButtonDisabled(true);
     setError("");
     setIsDone(true);
   }, [imageURL]);
 
   // save changes
   const saveChanges = async () => {
+    console.log("hello world !");
     setIsLoading(true);
     // image URL is valid URL
     const response = await axios.post(
@@ -95,6 +104,7 @@ export const Image = () => {
     setIsClicked(false);
     // set is done to false so the save changes button will not be displayed
     setIsDone(false);
+    setIsButtonDisabled(false);
   };
 
   // wake up the server with an initial empty request
@@ -135,6 +145,7 @@ export const Image = () => {
                   <button
                     className={styles.saveChanges}
                     onClick={() => saveChanges()}
+                    disabled={isButtonDisabled}
                   >
                     Save
                   </button>
@@ -167,9 +178,9 @@ export const Image = () => {
         target={"_blank"}
         className={styles.imageSource}
       >
-        {isValidURL(imageURL)
-          ? new URL(imageURL).hostname.replace("www.", "")
-          : new URL(imageProps.URL).hostname.replace("www.", "")}
+        {new URL(
+          isValidURL(imageURL) ? imageURL : imageProps.URL
+        ).hostname.replace("www.", "")}
       </a>
     </div>
   );

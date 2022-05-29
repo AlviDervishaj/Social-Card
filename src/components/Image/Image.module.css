@@ -108,6 +108,11 @@
   background-color: #17c3b2;
 }
 
+.saveChanges:disabled {
+  background-color: #17c3b2d6;
+  cursor: not-allowed;
+}
+
 .discardChanges {
   background-color: #d62828;
 }
