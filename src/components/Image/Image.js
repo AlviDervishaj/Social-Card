@@ -61,14 +61,13 @@ export const Image = () => {
       setIsButtonDisabled(true);
       return setError("Please enter a valid url !");
     }
-    setIsButtonDisabled(true);
+    setIsButtonDisabled(false);
     setError("");
     setIsDone(true);
   }, [imageURL]);
 
   // save changes
   const saveChanges = async () => {
-    console.log("hello world !");
     setIsLoading(true);
     // image URL is valid URL
     const response = await axios.post(
