@@ -27,12 +27,10 @@ export const Image = () => {
   // control the "Done" button
   const [isDone, setIsDone] = useState(false);
   // image description
-  const [imageDescription, setImageDescription] = useState(
-    "Image Description here !"
-  );
+  const [imageDescription, setImageDescription] = useState(imageProps.description);
   const [isLoading, setIsLoading] = useState(false);
   // image title
-  const [imageTitle, setImageTitle] = useState("Image Title Here !");
+  const [imageTitle, setImageTitle] = useState(imageProps.title);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   // check if text is a valid URL
   const isValidURL = (text) => {
@@ -70,10 +68,12 @@ export const Image = () => {
   const saveChanges = async () => {
     setIsLoading(true);
     // image URL is valid URL
+    //
+    //process.env.NODE_ENV === "production"
+    //    ? process.env.REACT_APP_PRODUCTION_URL
+    //    : process.env.REACT_APP_DEVELOPMENT_URL,
     const response = await axios.post(
-      process.env.NODE_ENV === "production"
-        ? process.env.REACT_APP_PRODUCTION_URL
-        : process.env.REACT_APP_DEVELOPMENT_URL,
+      process.env.REACT_APP_PRODUCTION_URL,
       { imageURL }
     );
     // set image properties
@@ -92,8 +92,8 @@ export const Image = () => {
     setImageURL(response.data.url ? response.data.url : imageProps.URL);
     // update image props
     setImageProps({
-      title: imageTitle,
-      description: imageDescription,
+      title: response.data.title ? response.data.title : imageProps.title,
+      description: response.data.description ? response.data.description : imageProps.description,
       URL: response.data.url ? response.data.url : imageProps.URL,
     });
     // set is loading to false because server returned a response and

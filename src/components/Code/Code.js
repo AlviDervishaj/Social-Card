@@ -199,6 +199,7 @@ export const Code = () => {
       console.error(error);
     }
   }, []);
+  console.log({title: imageProps.title});
   return (
     <>
       <div className={styles.codeContainer} onClick={() => copyToClipboard()}>
